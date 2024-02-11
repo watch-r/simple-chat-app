@@ -1,7 +1,8 @@
 import { Button } from "@radix-ui/themes";
-import { ThemeToggle } from "./components/ui/ToggleTheme";
+import { ThemeToggle } from "./ui/ToggleTheme";
+import { db } from "./lib/db";
 
-export default function Home() {
+export default async function Home() {
     return (
         <>
             <div>Hello World</div>
