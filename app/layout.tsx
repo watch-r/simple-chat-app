@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Theme, ThemePanel } from "@radix-ui/themes";
+import { Container, Theme, ThemePanel } from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
 import { ThemeProvider } from "./ui/theme-provider";
 import AuthProvider from "./auth/AuthProvider";
@@ -21,18 +21,18 @@ export default function RootLayout({
     return (
         <html lang="en">
             {/* <AuthProvider> */}
-                <body className={inter.className}>
-                    <ThemeProvider attribute="class">
-                        <Theme
-                            accentColor="iris"
-                            grayColor="olive"
-                            radius="full"
-                        >
-                            <main className="p-5">{children}</main>
-                            {/* <ThemePanel /> */}
-                        </Theme>
-                    </ThemeProvider>
-                </body>
+
+            <body className={inter.className}>
+                <ThemeProvider attribute="class">
+                    <Theme accentColor="iris" grayColor="olive" radius="full">
+                        <main>
+                            {children}
+                        </main>
+                        {/* <ThemePanel /> */}
+                    </Theme>
+                </ThemeProvider>
+            </body>
+
             {/* </AuthProvider> */}
         </html>
     );

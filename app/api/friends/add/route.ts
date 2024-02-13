@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
             return NextResponse.json("User not found", { status: 404 });
 
         if (idToAdd === session.user.id)
-            return NextResponse.json("Cannot add yourself", { status: 403 });
+            return NextResponse.json("Can't add yourself", { status: 403 });
 
         const friendAlreadyAdded = (await fetchRedisData(
             "sismember",
