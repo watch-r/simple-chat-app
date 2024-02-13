@@ -1,5 +1,4 @@
 import { Heading } from "@radix-ui/themes";
-import React from "react";
 import AddFriendButton from "./_components/AddFriend";
 
 const AddFriendPage = () => {
