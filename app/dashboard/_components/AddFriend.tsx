@@ -7,10 +7,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import axios, { AxiosError } from "axios";
 import { addFriendValidator } from "@/app/lib/validations/addFriendValidator";
 import Spinner from "@/app/ui/Spinner";
+import { useRouter } from "next/navigation";
 
 type SearchFriendForm = z.infer<typeof addFriendValidator>;
 
 const AddFriendButton = () => {
+    const router = useRouter();
     const [success, setSuccess] = useState<boolean>(false);
     const [isSubmitting, setSubmitting] = useState<boolean>(false);
 
@@ -31,6 +33,7 @@ const AddFriendButton = () => {
                 email: validatedEmail,
             });
             setSuccess(true);
+            setSubmitting(false)
         } catch (error) {
             setSubmitting(false);
             if (error instanceof z.ZodError) {
@@ -55,7 +58,7 @@ const AddFriendButton = () => {
 
     return (
         <div className="max-w-sm">
-            <Heading size={"3"} className="pt-5 pb-2 pl-1">
+            <Heading size={"3"} className="pb-2">
                 Add Friend By Email
             </Heading>
             <form onSubmit={handleSubmit(onSubmit)}>

@@ -9,10 +9,7 @@ import { z } from "zod";
 export async function POST(request: NextRequest) {
     const session = await getServerSession(authOptions);
     if (!session)
-        return NextResponse.json(
-            { message: "You are Unauthorized" },
-            { status: 401 }
-        );
+        return NextResponse.json("You are Unauthorized", { status: 401 });
 
     try {
         const body = await request.json();

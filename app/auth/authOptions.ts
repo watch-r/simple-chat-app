@@ -2,25 +2,29 @@ import GoogleProvider from "next-auth/providers/google";
 import { UpstashRedisAdapter } from "@next-auth/upstash-redis-adapter";
 import { db } from "@/app/lib/db";
 import { NextAuthOptions } from "next-auth";
+import { fetchRedisData } from "@/app/helpers/FetchRedisData";
 
 export const authOptions: NextAuthOptions = {
     adapter: UpstashRedisAdapter(db),
     callbacks: {
         async jwt({ token, user }) {
-            const dbUserResult = (await db.get(
+            const dbUserResult = (await fetchRedisData(
+                "get",
                 `user:${token.id}`
-            )) as User | null;
+            )) as string | null;
             if (!dbUserResult) {
                 if (user) {
                     token.id = user!.id;
                 }
                 return token;
             }
+
+            const dbUser = JSON.parse(dbUserResult) as User
             return {
-                id: dbUserResult.id,
-                name: dbUserResult.name,
-                email: dbUserResult.email,
-                picture: dbUserResult.image,
+                id: dbUser.id,
+                name: dbUser.name,
+                email: dbUser.email,
+                picture: dbUser.image,
             };
         },
         async session({ session, token }) {

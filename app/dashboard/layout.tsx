@@ -5,9 +5,9 @@ import { notFound } from "next/navigation";
 import { PropsWithChildren } from "react";
 import { authOptions } from "../auth/authOptions";
 import { Icons } from "../ui/Icon";
-import SideBarOptionsComponment from "./add/_components/SideBarOptionsComponment";
-import UserProfile from "./add/_components/UserProfile";
-import FriendRequests from "./add/_components/FriendRequests";
+import SideBarOptionsComponment from "./_components/SideBarOptionsComponment";
+import UserProfile from "./_components/UserProfile";
+import FriendRequests from "./_components/FriendRequests";
 import { fetchRedisData } from "../helpers/FetchRedisData";
 
 const LayoutOfDashboard = async ({ children }: PropsWithChildren) => {
@@ -23,13 +23,13 @@ const LayoutOfDashboard = async ({ children }: PropsWithChildren) => {
     return (
         <>
             <Container>
-                <Grid columns={"7"} className="p-1">
+                <Grid columns={"7"} className="">
                     {/* Left Side */}
 
-                    <Box className="col-span-2">
+                    <Box className="col-span-2 p-1 mt-1">
                         <Flex
                             direction={"column"}
-                            className="w-full flex h-screen"
+                            className="w-full h-svh"
                             justify={"between"}
                         >
                             <Box className="space-y-2">
@@ -62,7 +62,7 @@ const LayoutOfDashboard = async ({ children }: PropsWithChildren) => {
                         </Flex>
                     </Box>
                     {/* Right-Side */}
-                    <Box className="col-span-5">{children}</Box>
+                    <Box className="col-span-5 p-2">{children}</Box>
                 </Grid>
             </Container>
         </>
