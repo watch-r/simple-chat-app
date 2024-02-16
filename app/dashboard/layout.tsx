@@ -9,6 +9,8 @@ import SideBarOptionsComponment from "./_components/SideBarOptionsComponment";
 import UserProfile from "./_components/UserProfile";
 import FriendRequests from "./_components/FriendRequests";
 import { fetchRedisData } from "../helpers/FetchRedisData";
+import { fetchFriendsByUserId } from "../helpers/FetchFriendsByUserId";
+import SideBarChatList from "./_components/SideBarChatList";
 
 const LayoutOfDashboard = async ({ children }: PropsWithChildren) => {
     const session = await getServerSession(authOptions);
@@ -20,6 +22,8 @@ const LayoutOfDashboard = async ({ children }: PropsWithChildren) => {
             `user:${session.user.id}:incoming_friend_requests`
         )) as User[]
     ).length;
+
+    const friends = await fetchFriendsByUserId(session.user.id);
     return (
         <>
             <Container>
@@ -36,11 +40,18 @@ const LayoutOfDashboard = async ({ children }: PropsWithChildren) => {
                                 <Link href={"/dashboard"}>
                                     <Icons.Logo className="h-10 w-10" />
                                 </Link>
-                                <Text className="font-semibold text-xs text-gray-500">
-                                    Your Chats
-                                </Text>
+                                {friends.length > 0 ? (
+                                    <Text className="font-semibold text-xs text-gray-500">
+                                        Your Chats
+                                    </Text>
+                                ) : null}
                                 <Flex direction={"column"}>
-                                    <Box>//Chats that this user have</Box>
+                                    <Box>
+                                        <SideBarChatList
+                                            friends={friends}
+                                            sessionId={session.user.id}
+                                        />
+                                    </Box>
                                     <Box>
                                         <SideBarOptionsComponment />
                                         <FriendRequests
