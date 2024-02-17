@@ -1,16 +1,24 @@
-import { Box, Card, Container, Flex, Grid, Text } from "@radix-ui/themes";
+import {
+    Box,
+    Card,
+    Container,
+    Flex,
+    Grid,
+    SelectSeparator,
+    Separator,
+    Text,
+} from "@radix-ui/themes";
 import { getServerSession } from "next-auth";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PropsWithChildren } from "react";
 import { authOptions } from "../auth/authOptions";
-import { Icons } from "../ui/Icon";
+import { fetchFriendsByUserId } from "../helpers/FetchFriendsByUserId";
+import { fetchRedisData } from "../helpers/FetchRedisData";
+import FriendRequests from "./_components/FriendRequests";
+import NavBar from "./_components/Navbar";
+import SideBarChatList from "./_components/SideBarChatList";
 import SideBarOptionsComponment from "./_components/SideBarOptionsComponment";
 import UserProfile from "./_components/UserProfile";
-import FriendRequests from "./_components/FriendRequests";
-import { fetchRedisData } from "../helpers/FetchRedisData";
-import { fetchFriendsByUserId } from "../helpers/FetchFriendsByUserId";
-import SideBarChatList from "./_components/SideBarChatList";
 
 const LayoutOfDashboard = async ({ children }: PropsWithChildren) => {
     const session = await getServerSession(authOptions);
@@ -27,43 +35,41 @@ const LayoutOfDashboard = async ({ children }: PropsWithChildren) => {
     return (
         <>
             <Container>
-                <Grid columns={"7"} className="">
+                <Grid columns={"7"} className=''>
                     {/* Left Side */}
-
-                    <Box className="col-span-2 p-1 mt-1">
+                    <Box className='col-span-2 p-1 mt-4'>
                         <Flex
                             direction={"column"}
-                            className="w-full h-svh"
+                            className='w-full h-svh'
                             justify={"between"}
                         >
-                            <Box className="space-y-2">
-                                <Link href={"/dashboard"}>
-                                    <Icons.Logo className="h-10 w-10" />
-                                </Link>
+                            <Box className='space-y-2'>
+                                <NavBar />
                                 {friends.length > 0 ? (
-                                    <Text className="font-semibold text-xs text-gray-500">
+                                    <Text
+                                        size={"2"}
+                                        className='font-semibold text-gray-500'
+                                    >
                                         Your Chats
                                     </Text>
                                 ) : null}
-                                <Flex direction={"column"}>
-                                    <Box>
-                                        <SideBarChatList
-                                            friends={friends}
-                                            sessionId={session.user.id}
-                                        />
-                                    </Box>
-                                    <Box>
-                                        <SideBarOptionsComponment />
-                                        <FriendRequests
-                                            sessionId={session.user.id}
-                                            initialUnseenRequestCount={
-                                                unseenRequests
-                                            }
-                                        />
-                                    </Box>
-                                </Flex>
+                                <Box className='p-2'>
+                                    <SideBarChatList
+                                        friends={friends}
+                                        sessionId={session.user.id}
+                                    />
+                                </Box>
+                                <Box>
+                                    <SideBarOptionsComponment />
+                                    <FriendRequests
+                                        sessionId={session.user.id}
+                                        initialUnseenRequestCount={
+                                            unseenRequests
+                                        }
+                                    />
+                                </Box>
                             </Box>
-                            <Card className="">
+                            <Card className=''>
                                 <UserProfile
                                     image={session.user.image!}
                                     email={session.user.email!}
@@ -73,7 +79,7 @@ const LayoutOfDashboard = async ({ children }: PropsWithChildren) => {
                         </Flex>
                     </Box>
                     {/* Right-Side */}
-                    <Box className="col-span-5 p-2">{children}</Box>
+                    <Card className='col-span-5 m-1'>{children}</Card>
                 </Grid>
             </Container>
         </>
