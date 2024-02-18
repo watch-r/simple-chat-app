@@ -13,6 +13,11 @@ on:
   workflow_dispatch:
 env:
   UPSTASH_REDIS_REST_URL: "${{secrets.UPSTASH_REDIS_REST_URL}}"
+  UPSTASH_REDIS_REST_TOKEN: "${{secrets.UPSTASH_REDIS_REST_TOKEN}}"
+  NEXTAUTH_SECRET: "${{secrets.NEXTAUTH_SECRET}}"
+  NEXTAUTH_URL: "${{secrets.NEXTAUTH_URL}}"
+  GOOGLE_CLIENT_ID: "${{secrets.GOOGLE_CLIENT_ID}}"
+  GOOGLE_CLIENT_SECRET: "${{secrets.GOOGLE_CLIENT_SECRET}}"
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
