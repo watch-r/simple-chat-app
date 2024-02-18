@@ -11,7 +11,8 @@ on:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-
+env:
+  UPSTASH_REDIS_REST_URL: "${{secrets.UPSTASH_REDIS_REST_URL}}"
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
